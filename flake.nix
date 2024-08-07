@@ -13,13 +13,17 @@
         ];
         shell = pkgs.mkShell {
           nativeBuildInputs = with pkgs.buildPackages; [
-            pkg-config
             clang
+            clang-tools
             meson
             muon
             ninja
-            hello
+            gnumake
+            cmake
           ] ++ nix-utils;
+          buildInputs = with pkgs; [
+            pkg-config
+          ];
         };
 
       in
