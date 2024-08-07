@@ -1,5 +1,6 @@
 executable(
     project_name,
+    project_resources,
     sources: ['main.cpp'],
     dependencies: [
         dependency('gtk4'),

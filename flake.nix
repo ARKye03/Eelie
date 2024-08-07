@@ -25,6 +25,7 @@
           clang
           meson
           ninja
+          blueprint-compiler
         ];
         shell = pkgs.mkShell {
           nativeBuildInputs = with pkgs.buildPackages; [

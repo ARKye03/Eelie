@@ -1,5 +1,4 @@
 #include "gtk4-layer-shell.h"
-#include <gtk/gtk.h>
 #include <gtkmm-4.0/gtkmm.h>
 
 static void
