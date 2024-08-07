@@ -19,7 +19,10 @@ CppProps() {
 EOF
 }
 
-mkdir -p /.vscode
+if [ ! -d /.vscode ]; then
+  mkdir -p /.vscode
+fi
+
 includePaths=$(pkg-config --cflags gtk4 gtk4-layer-shell-0 gtkmm-4.0 | tr ' ' '\n' | grep '\-I' | sed 's/-I//g' | jq -R -s -c 'split("\n") | map(select(length > 0))')
 clang=$(which clang)
 
