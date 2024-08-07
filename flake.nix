@@ -11,6 +11,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
         gtk-utils = with pkgs; [
           gtk4
+          gtkmm4
           gtk4-layer-shell
           glib
         ];
@@ -35,38 +36,7 @@
             pkg-config
           ] ++ gtk-utils;
         };
-        genCppProps = pkgs.stdenv.mkDerivation
-          {
-            name = "generate-cpp-properties";
-            buildInputs = with pkgs; [ pkg-config jq ] ++ gtk-utils;
 
-            src = ./.;
-
-            buildPhase = ''
-              # No build steps required
-            '';
-
-            installPhase = /* shell */ ''
-              mkdir -p $out/.vscode
-              includePaths=$(pkg-config --cflags gtk4 gtk4-layer-shell-0 | tr ' ' '\n' | grep '\-I' | sed 's/-I//g' | jq -R -s -c 'split("\n") | map(select(length > 0))')
-              cat > $out/.vscode/c_cpp_properties.json <<EOF
-              {
-                  "configurations": [
-                      {
-                          "name": "Linux",
-                          "includePath": $includePaths,
-                          "defines": [],
-                          "compilerPath": "${pkgs.clang}/bin/clang",
-                          "cStandard": "c23",
-                          "cppStandard": "c++23",
-                          "intelliSenseMode": "linux-clang-x64"
-                      }
-                  ],
-                  "version": 4
-              }
-              EOF
-            '';
-          };
         eelie-dock = pkgs.stdenv.mkDerivation {
           pname = "eelie-dock";
           version = "0.0.1";
@@ -98,7 +68,6 @@
       in
       {
         devShells.default = shell;
-        packages.default = genCppProps;
         apps = {
           dock = {
             type = "app";
