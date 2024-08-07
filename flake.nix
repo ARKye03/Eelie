@@ -7,6 +7,11 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+        gtk-utils = with pkgs; [
+          gtk4
+          gtk4-layer-shell
+          glib
+        ];
         nix-utils = with pkgs; [
           nixpkgs-fmt
           nixd
@@ -21,7 +26,7 @@
             ninja
             gnumake
             cmake
-          ] ++ nix-utils;
+          ] ++ nix-utils ++ gtk-utils;
           buildInputs = with pkgs; [
             pkg-config
           ];
