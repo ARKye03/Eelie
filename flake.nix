@@ -56,7 +56,7 @@
                           "name": "Linux",
                           "includePath": $includePaths,
                           "defines": [],
-                          "compilerPath": "/usr/bin/clang",
+                          "compilerPath": "${pkgs.clang}/bin/clang",
                           "cStandard": "c23",
                           "cppStandard": "c++23",
                           "intelliSenseMode": "linux-clang-x64"
