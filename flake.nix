@@ -10,6 +10,7 @@
         nix-utils = with pkgs; [
           nixpkgs-fmt
           nixd
+          # nil
         ];
         shell = pkgs.mkShell {
           nativeBuildInputs = with pkgs.buildPackages; [
