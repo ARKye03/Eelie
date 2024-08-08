@@ -30,8 +30,8 @@ MyWindow::MyWindow()
 
     set_child(master_box);
 
-    Gtk::Button button1("Button 1");
-    Gtk::Button button2("Button 2");
+    Gtk::Button button1("Hello");
+    Gtk::Button button2("World");
     master_box.append(button1);
     master_box.append(button2);
 
