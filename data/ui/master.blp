@@ -1,75 +1,19 @@
 using Gtk 4.0;
 
-template $NavBar: Window {
+template $Dock: Window {
+  name: "Dock++";
   default-height: 40;
 
   styles [
-    "NavBar_Master"
+    "dock_window"
   ]
 
-  CenterBox {
-    start-widget: Box {
-      spacing: 10;
+  Box master_box {
+    styles [
+      "master_box"
+    ]
 
-      Button apps_button {
-        label: "L";
-        name: "apps_button";
-        valign: center;
-      }
-
-      Box workspaces {
-        name: "workspaces";
-        spacing: 5;
-
-        styles [
-          "workspaces"
-        ]
-      }
-    };
-
-    center-widget: Button mpris_button {
-      name: "mpris_button";
-      valign: center;
-
-      styles [
-        "mpris_button"
-      ]
-
-      child: Label mpris_label {
-        label: "oooops";
-      };
-    };
-
-    end-widget: Box right_box {
-      spacing: 10;
-
-      styles [
-        "right_box"
-      ]
-
-      Label volume {
-        name: "volume";
-
-        styles [
-          "navbar_label"
-        ]
-      }
-
-      Label clock {
-        name: "clock";
-
-        styles [
-          "navbar_label"
-        ]
-      }
-
-      Box systray {}
-
-      Button power_button {
-        label: "Power";
-        name: "power_button";
-        valign: center;
-      }
-    };
+    homogeneous: true;
+    spacing: 10;
   }
 }

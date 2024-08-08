@@ -1,7 +1,7 @@
 executable(
     project_name,
     project_resources,
-    sources: ['main.cpp'],
+    sources: ['main.cpp', 'window.hpp'],
     dependencies: [
         dependency('gtk4'),
         dependency('gtkmm-4.0'),
