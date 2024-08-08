@@ -70,11 +70,9 @@
       in
       {
         devShells.default = shell;
-        apps = {
-          dock = {
-            type = "app";
-            program = "${eelie-dock}/bin/${dockpp}";
-          };
+        apps.default = {
+          type = "app";
+          program = "${eelie-dock}/bin/${dockpp}";
         };
       });
 }
