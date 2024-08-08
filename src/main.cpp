@@ -32,11 +32,16 @@ MyWindow::MyWindow()
 
     Gtk::Button button1("Hello");
     Gtk::Button button2("World");
+    button1.set_valign(Gtk::Align::CENTER);
+    button1.set_halign(Gtk::Align::CENTER);
+    button2.set_valign(Gtk::Align::CENTER);
+    button2.set_halign(Gtk::Align::CENTER);
     master_box.append(button1);
     master_box.append(button2);
 
     set_title("Basic application");
-    set_default_size(200, 200);
+    set_name("dockpp");
+    gtk_layer_set_namespace(GTK_WINDOW(gobj()), "dockpp");
 
     LoadCss("styles/main.css");
 }

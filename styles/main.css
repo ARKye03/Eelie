@@ -1,3 +1,12 @@
+window#dockpp {
+    all: unset;
+}
+
 .master_box {
+    background-color: #24273a;
+    border-radius: 5px;
+    border: 1px solid #3E4452;
     padding: 10px;
+    min-width: 300px;
+    min-height: 60px;
 }
