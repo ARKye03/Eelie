@@ -1,7 +1,7 @@
 executable(
     project_name,
     project_resources,
-    sources: ['main.cpp', 'window.hpp'],
+    sources: ['main.cpp', 'window.hpp', 'AppButton.cpp','AppButton.hpp'],
     dependencies: [
         dependency('gtk4'),
         dependency('gtkmm-4.0'),

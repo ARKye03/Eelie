@@ -1,23 +1,13 @@
+#include "window.hpp"
+#include "AppButton.hpp"
 #include "gtk4-layer-shell.h"
-#include <gtkmm-4.0/gtkmm.h>
+#include <giomm.h>
 #include <iostream>
 
-class MyWindow : public Gtk::Window
-{
-public:
-    MyWindow();
-
-private:
-    Gtk::Box master_box;
-    void LoadCss(const std::string &css_path);
-};
-
-MyWindow::MyWindow()
+DockWindow::DockWindow()
 {
     gtk_layer_init_for_window(GTK_WINDOW(gobj()));
     gtk_layer_set_layer(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_LAYER_TOP);
-
-    gtk_layer_set_exclusive_zone(GTK_WINDOW(gobj()), true);
 
     gtk_layer_set_margin(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_EDGE_TOP, 10);
     gtk_layer_set_margin(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_EDGE_BOTTOM, 10);
@@ -39,13 +29,19 @@ MyWindow::MyWindow()
     master_box.append(button1);
     master_box.append(button2);
 
+    AppButton app_button("brave-browser.desktop");
+    AppButton app_button2("code.desktop");
+    master_box.append(app_button);
+    master_box.append(app_button2);
+
     set_title("Basic application");
     set_name("dockpp");
     gtk_layer_set_namespace(GTK_WINDOW(gobj()), "dockpp");
 
     LoadCss("styles/main.css");
 }
-void MyWindow::LoadCss(const std::string &css_path)
+
+void DockWindow::LoadCss(const std::string &css_path)
 {
     auto css_provider = Gtk::CssProvider::create();
     try
@@ -63,5 +59,5 @@ void MyWindow::LoadCss(const std::string &css_path)
 int main(int argc, char **argv)
 {
     auto app = Gtk::Application::create("org.codeberg.ARKye03.Eelie");
-    return app->make_window_and_run<MyWindow>(argc, argv);
+    return app->make_window_and_run<DockWindow>(argc, argv);
 }
