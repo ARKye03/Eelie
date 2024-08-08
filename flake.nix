@@ -9,6 +9,7 @@
       let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
+        dockpp = "org.codeberg.ARKye03.Eelie";
         gtk-utils = with pkgs; [
           gtk4
           gtkmm4
@@ -55,14 +56,14 @@
 
           installPhase = ''
             mkdir -p $out/bin
-            cp $TMPDIR/buildNix/src/com.github.ARKye03.Eelie $out/bin
-            chmod +x $out/bin/com.github.ARKye03.Eelie
+            cp $TMPDIR/buildNix/src/${dockpp} $out/bin
+            chmod +x $out/bin/${dockpp}
           '';
 
           meta = with pkgs.lib; {
             description = "Eelie Dock Application";
             license = licenses.mit;
-            maintainers = with maintainers; [ yourGitHubUsername ];
+            maintainers = with maintainers; [ ARKye03 ];
           };
         };
 
@@ -72,7 +73,7 @@
         apps = {
           dock = {
             type = "app";
-            program = "${eelie-dock}/bin/com.github.ARKye03.Eelie";
+            program = "${eelie-dock}/bin/${dockpp}";
           };
         };
       });
