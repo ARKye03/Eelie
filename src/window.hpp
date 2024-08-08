@@ -1,18 +1,17 @@
-#include <gtkmm.h>
+#ifndef WINDOW_HPP
+#define WINDOW_HPP
 
-class master_window
+#include <gtkmm.h>
+#include <string>
+
+class DockWindow : public Gtk::Window
 {
-private:
-    /* data */
 public:
-    master_window(/* args */);
-    ~master_window();
+    DockWindow();
+
+private:
+    Gtk::Box master_box;
+    void LoadCss(const std::string &css_path);
 };
 
-master_window::master_window(/* args */)
-{
-}
-
-master_window::~master_window()
-{
-}
+#endif // WINDOW_HPP
