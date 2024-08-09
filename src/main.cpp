@@ -3,6 +3,7 @@
 #include "gtk4-layer-shell.h"
 #include <giomm.h>
 #include <iostream>
+#include <unordered_map>
 
 DockWindow::DockWindow()
 {
@@ -20,21 +21,19 @@ DockWindow::DockWindow()
 
     set_child(master_box);
 
-    Gtk::Button button1("Hello");
-    Gtk::Button button2("World");
-    button1.set_valign(Gtk::Align::CENTER);
-    button1.set_halign(Gtk::Align::CENTER);
-    button2.set_valign(Gtk::Align::CENTER);
-    button2.set_halign(Gtk::Align::CENTER);
-    master_box.append(button1);
-    master_box.append(button2);
+    std::unordered_map<std::string, int> dictionary;
+    dictionary["thunar.desktop"] = 0;
+    dictionary["discord.desktop"] = 1;
+    dictionary["code.desktop"] = 2;
+    dictionary["brave-browser.desktop"] = 3;
 
-    AppButton app_button("brave-browser.desktop");
-    AppButton app_button2("code.desktop");
-    master_box.append(app_button);
-    master_box.append(app_button2);
+    for (auto &[key, value] : dictionary)
+    {
+        auto app_button = Gtk::make_managed<AppButton>(key);
+        master_box.append(*app_button);
+    }
 
-    set_title("Basic application");
+    set_title("Dock");
     set_name("dockpp");
     gtk_layer_set_namespace(GTK_WINDOW(gobj()), "dockpp");
 

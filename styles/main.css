@@ -9,4 +9,20 @@ window#dockpp {
     padding: 10px;
     min-width: 300px;
     min-height: 60px;
+
+}
+
+.app_button {
+    all: unset;
+    border-radius: 10px;
+    background-color: transparent;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.app_button:hover {
+    border-bottom: 5px solid #3E4452;
+}
+
+.app_button:active {
+    background-color: #3E4452;
 }
