@@ -18,7 +18,6 @@ AppButton::AppButton(const std::string &app_name)
 
 void AppButton::on_button_clicked()
 {
-    std::cout << "Button clicked" << std::endl; // Print to verify the signal is connected
     if (this->app_info)
     {
         auto actions = this->app_info->list_actions();
