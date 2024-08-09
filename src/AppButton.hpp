@@ -11,6 +11,7 @@ public:
 
 private:
     void on_button_clicked();
+    bool is_app_running(const std::string &app_name);
     Glib::RefPtr<Gio::DesktopAppInfo> app_info;
     std::string app_name;
     Gtk::Image icon;
