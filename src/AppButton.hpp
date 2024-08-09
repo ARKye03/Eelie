@@ -10,6 +10,7 @@ public:
     AppButton(const std::string &app_name);
 
 private:
+    void on_button_clicked();
     Glib::RefPtr<Gio::DesktopAppInfo> app_info;
     std::string app_name;
     Gtk::Image icon;

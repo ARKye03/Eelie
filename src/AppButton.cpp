@@ -1,5 +1,6 @@
 #include "AppButton.hpp"
 #include <giomm.h>
+#include <iostream> // Include iostream for std::cout
 
 AppButton::AppButton(const std::string &app_name)
 {
@@ -9,15 +10,21 @@ AppButton::AppButton(const std::string &app_name)
     {
         this->icon.set(this->app_info->get_icon());
     }
+    icon.set_pixel_size(40);
+    set_css_classes({"app_button"});
     set_child(icon);
-    signal_clicked().connect([this]()
-                             {
-        if (this->app_info)
+    signal_clicked().connect(sigc::mem_fun(*this, &AppButton::on_button_clicked));
+}
+
+void AppButton::on_button_clicked()
+{
+    std::cout << "Button clicked" << std::endl; // Print to verify the signal is connected
+    if (this->app_info)
+    {
+        auto actions = this->app_info->list_actions();
+        if (!actions.empty())
         {
-            auto actions = this->app_info->list_actions();
-            if (!actions.empty())
-            {
-                this->app_info->launch_action(actions[0], NULL);
-            }
-        } });
+            this->app_info->launch_action(actions[0], NULL);
+        }
+    }
 }
