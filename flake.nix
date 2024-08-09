@@ -7,9 +7,11 @@
 
     flake-utils.lib.eachDefaultSystem (system:
       let
-        system = "x86_64-linux";
+
         pkgs = nixpkgs.legacyPackages.${system};
         dockpp = "org.codeberg.ARKye03.Eelie";
+        version = builtins.replaceStrings [ "\n" ] [ "" ] (builtins.readFile ./version);
+
         gtk-utils = with pkgs; [
           gtk4
           gtkmm4
@@ -40,8 +42,8 @@
         };
 
         eelie-dock = pkgs.stdenv.mkDerivation {
-          pname = "eelie-dock";
-          version = "0.0.1";
+          name = "eelie-dock";
+          version = version;
           buildInputs = with pkgs; [ pkg-config ] ++ compile-utils ++ gtk-utils;
           src = ./.;
 
