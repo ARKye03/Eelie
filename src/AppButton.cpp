@@ -1,7 +1,7 @@
 #include "AppButton.hpp"
 #include <giomm.h>
 #include <iostream>
-#include <cstdio> // Include cstdio for popen and pclose
+#include <cstdio>
 
 AppButton::AppButton(const std::string &app_name)
 {
