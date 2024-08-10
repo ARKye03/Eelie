@@ -2,6 +2,7 @@
 #include <giomm.h>
 #include <iostream>
 #include <cstdio>
+#include <libgen.h>
 
 AppButton::AppButton(const std::string &app_name)
 {
@@ -19,8 +20,14 @@ AppButton::AppButton(const std::string &app_name)
 
 bool AppButton::is_app_running(const std::string &app_name)
 {
-    std::string command = "pgrep -x " + app_name + " > /dev/null";
+    // Extract the base name of the executable
+    char *app_name_copy = strdup(app_name.c_str());
+    std::string base_name = basename(app_name_copy);
+    free(app_name_copy);
+
+    std::string command = "pgrep -x " + base_name + " > /dev/null";
     int result = std::system(command.c_str());
+
     return result == 0;
 }
 
@@ -38,7 +45,16 @@ void AppButton::on_button_clicked()
         auto actions = this->app_info->list_actions();
         if (!actions.empty())
         {
-            this->app_info->launch_action(actions[0], NULL);
+            auto launch_context = Gio::AppLaunchContext::create();
+            try
+            {
+                // std::vector<Glib::RefPtr<Gio::File>> files; // Create an empty list of files
+                this->app_info->launch(NULL, NULL);
+            }
+            catch (const Glib::Error &ex)
+            {
+                std::cerr << "Failed to launch application: " << ex.what() << std::endl;
+            }
         }
     }
 }
