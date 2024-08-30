@@ -19,7 +19,6 @@
         nix-utils = with pkgs; [
           nixpkgs-fmt
           nixd
-          # nil
         ];
         compile-utils = with pkgs; [
           clang-tools
