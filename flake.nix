@@ -7,7 +7,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        dockpp = "org.codeberg.ARKye03.Eelie";
+        dock-name = "org.codeberg.ARKye03.Eelie";
         version = builtins.replaceStrings [ "\n" ] [ "" ] (builtins.readFile ./version);
 
         gtk-utils = with pkgs; [
@@ -39,7 +39,7 @@
         };
 
         dock = pkgs.stdenv.mkDerivation {
-          name = "eelie-dock";
+          name = dock-name;
           version = version;
           buildInputs = with pkgs; [ pkg-config ] ++ compile-utils ++ gtk-utils;
           src = ./.;
@@ -55,8 +55,8 @@
 
           installPhase = ''
             mkdir -p $out/bin
-            cp $TMPDIR/buildNix/src/${dockpp} $out/bin
-            chmod +x $out/bin/${dockpp}
+            cp $TMPDIR/buildNix/src/${dock-name} $out/bin
+            chmod +x $out/bin/${dock-name}
           '';
 
           meta = with pkgs.lib; {
@@ -68,10 +68,11 @@
         nonNixos-dock = dock.overrideAttrs {
           installPhase = ''
             mkdir -p $out/bin
-            cp $TMPDIR/buildNix/src/${dockpp} $out/bin
-            ${pkgs.patchelf}/bin/patchelf --set-interpreter /lib64/ld-linux-x86-64.so.2 $out/bin/${dockpp}
-            ${pkgs.patchelf}/bin/patchelf --set-rpath /lib:/usr/lib $out/bin/${dockpp}
-            chmod +x $out/bin/${dockpp}
+            cp $TMPDIR/buildNix/src/${dock-name} $out/bin
+            ${pkgs.patchelf}/bin/patchelf --set-interpreter /lib64/ld-linux-x86-64.so.2 $out/bin/${dock-name}
+            ${pkgs.patchelf}/bin/patchelf --set-rpath /lib:/usr/lib $out/bin/${dock-name}
+            ${pkgs.patchelf}/bin/patchelf --shrink-rpath $out/bin/${dock-name}
+            chmod +x $out/bin/${dock-name}
           '';
         };
 
@@ -84,7 +85,7 @@
         };
         apps.default = {
           type = "app";
-          program = "${dock}/bin/${dockpp}";
+          program = "${dock}/bin/${dock-name}";
         };
       });
 }
