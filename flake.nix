@@ -38,7 +38,7 @@
           ] ++ gtk-utils;
         };
 
-        eelie-dock = pkgs.stdenv.mkDerivation {
+        dock = pkgs.stdenv.mkDerivation {
           name = "eelie-dock";
           version = version;
           buildInputs = with pkgs; [ pkg-config ] ++ compile-utils ++ gtk-utils;
@@ -65,13 +65,26 @@
             maintainers = with maintainers; [ ARKye03 ];
           };
         };
+        nonNixos-dock = dock.overrideAttrs {
+          installPhase = ''
+            mkdir -p $out/bin
+            cp $TMPDIR/buildNix/src/${dockpp} $out/bin
+            ${pkgs.patchelf}/bin/patchelf --set-interpreter /lib64/ld-linux-x86-64.so.2 $out/bin/${dockpp}
+            ${pkgs.patchelf}/bin/patchelf --set-rpath /lib:/usr/lib $out/bin/${dockpp}
+            chmod +x $out/bin/${dockpp}
+          '';
+        };
 
       in
       {
         devShells.default = shell;
+        packages = {
+          nixos = dock;
+          non_nixos = nonNixos-dock;
+        };
         apps.default = {
           type = "app";
-          program = "${eelie-dock}/bin/${dockpp}";
+          program = "${dock}/bin/${dockpp}";
         };
       });
 }
