@@ -1,3 +1,9 @@
-# C++ Journey
+# C++ Eelie
 
-I'm learning C++23 and I want to use it in my projects. Man this shit is hard.
+Linux Floating Dock with C++23.
+
+```sh
+nix develop # Enter my nix shell
+# or
+nix run github:ARKye03/Eelie # Build and run
+```
