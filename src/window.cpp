@@ -23,19 +23,21 @@ DockWindow::DockWindow()
     auto hover_controller = Gtk::EventControllerMotion::create();
     hover_controller->signal_enter().connect([this](double x, double y)
                                              { master_box.set_visible(true); });
-    hover_controller->signal_leave().connect([this]()
-                                             { master_box.set_visible(false); });
 
-    // master_box.set_margin_bottom(10);
     Gtk::Box event_box(Gtk::Orientation::VERTICAL);
     event_box.set_css_classes({"event_box"});
     event_box.append(master_box);
+
+    auto hover_controller2 = Gtk::EventControllerMotion::create();
+    hover_controller2->signal_leave().connect([this]()
+                                              { master_box.set_visible(false); });
 
     auto mbox = Gtk::Box();
     mbox.set_css_classes({"mbox"});
     event_box.append(mbox);
     event_box.set_valign(Gtk::Align::END);
     mbox.add_controller(hover_controller);
+    event_box.add_controller(hover_controller2);
 
     std::unordered_map<std::string, int> dictionary;
     dictionary["thunar.desktop"] = 0;
