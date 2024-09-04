@@ -26,3 +26,17 @@ window#dockpp {
 .app_button:active {
     background-color: #3E4452;
 }
+
+.hover_box {
+    background-color: transparent;
+    min-height: 40px;
+}
+
+.mbox {
+    min-height: 20px;
+    /* background-color: aqua; */
+}
+
+.event_box {
+    background-color: #24273a01;
+}

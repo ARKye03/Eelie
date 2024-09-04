@@ -11,15 +11,31 @@ DockWindow::DockWindow()
     gtk_layer_set_layer(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_LAYER_TOP);
 
     gtk_layer_set_margin(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_EDGE_TOP, 10);
-    gtk_layer_set_margin(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_EDGE_BOTTOM, 10);
+    // gtk_layer_set_margin(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_EDGE_BOTTOM, 10);`
 
     gtk_layer_set_anchor(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_EDGE_BOTTOM, true);
 
     master_box.set_homogeneous(true);
     master_box.set_spacing(10);
     master_box.set_css_classes({"master_box"});
+    master_box.set_visible(false);
 
-    set_child(master_box);
+    auto hover_controller = Gtk::EventControllerMotion::create();
+    hover_controller->signal_enter().connect([this](double x, double y)
+                                             { master_box.set_visible(true); });
+    hover_controller->signal_leave().connect([this]()
+                                             { master_box.set_visible(false); });
+
+    // master_box.set_margin_bottom(10);
+    Gtk::Box event_box(Gtk::Orientation::VERTICAL);
+    event_box.set_css_classes({"event_box"});
+    event_box.append(master_box);
+
+    auto mbox = Gtk::Box();
+    mbox.set_css_classes({"mbox"});
+    event_box.append(mbox);
+    event_box.set_valign(Gtk::Align::END);
+    mbox.add_controller(hover_controller);
 
     std::unordered_map<std::string, int> dictionary;
     dictionary["thunar.desktop"] = 0;
@@ -38,6 +54,7 @@ DockWindow::DockWindow()
     gtk_layer_set_namespace(GTK_WINDOW(gobj()), "dockpp");
 
     LoadCss("styles/main.css");
+    set_child(event_box);
 }
 
 void DockWindow::LoadCss(const std::string &css_path)
