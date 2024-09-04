@@ -1,6 +1,5 @@
 executable(
     project_name,
-    project_resources,
     sources: [
         'main.cpp',
         'window.cpp',
