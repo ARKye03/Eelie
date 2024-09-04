@@ -53,7 +53,10 @@ DockWindow::DockWindow()
     set_name("dockpp");
     gtk_layer_set_namespace(GTK_WINDOW(gobj()), "dockpp");
 
-    LoadCss("styles/main.css");
+    std::string css = Glib::getenv("HOME");
+    css += "/.config/eelie/main.css";
+
+    LoadCss(css);
     set_child(event_box);
 }
 
