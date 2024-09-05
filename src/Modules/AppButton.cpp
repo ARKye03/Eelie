@@ -48,8 +48,8 @@ void AppButton::on_button_clicked()
             auto launch_context = Gio::AppLaunchContext::create();
             try
             {
-                // std::vector<Glib::RefPtr<Gio::File>> files; // Create an empty list of files
-                this->app_info->launch(NULL, NULL);
+                std::vector<Glib::RefPtr<Gio::File>> files; // Create an empty list of files
+                this->app_info->launch(files, launch_context);
             }
             catch (const Glib::Error &ex)
             {
