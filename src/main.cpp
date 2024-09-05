@@ -21,11 +21,12 @@ void LoadCss(const std::string &css_path)
 int main(int argc, char **argv)
 {
     auto app = Gtk::Application::create("org.codeberg.ARKye03.Eelie");
-    auto window = app->make_window_and_run<DockWindow>(argc, argv);
 
     std::string css = Glib::getenv("HOME");
     css += "/.config/eelie/main.css";
     LoadCss(css);
+
+    auto window = app->make_window_and_run<DockWindow>(argc, argv);
 
     return window;
 }
