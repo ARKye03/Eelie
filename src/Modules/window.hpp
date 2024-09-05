@@ -11,6 +11,8 @@ public:
 
 private:
     Gtk::Box master_box;
+    Gtk::Box hide_box;
+    Gtk::Box show_box;
 };
 
 #endif // WINDOW_HPP

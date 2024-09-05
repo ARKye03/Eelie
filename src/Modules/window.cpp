@@ -31,13 +31,12 @@ DockWindow::DockWindow()
         master_box.set_visible(false);
         gtk_layer_set_exclusive_zone(GTK_WINDOW(gobj()), 0); });
 
-    Gtk::Box hide_box(Gtk::Orientation::VERTICAL);
+    hide_box.set_orientation(Gtk::Orientation::VERTICAL);
     hide_box.set_css_classes({"event_box"});
     hide_box.append(master_box);
     hide_box.set_valign(Gtk::Align::END);
     hide_box.add_controller(hide_controller);
 
-    auto show_box = Gtk::Box();
     show_box.set_css_classes({"mbox"});
     show_box.add_controller(show_controller);
     hide_box.append(show_box);
