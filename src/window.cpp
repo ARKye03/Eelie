@@ -40,6 +40,7 @@ DockWindow::DockWindow()
     show_box.set_css_classes({"mbox"});
     hide_box.append(show_box);
     hide_box.set_valign(Gtk::Align::END);
+
     show_box.add_controller(show_controller);
     hide_box.add_controller(hide_controller);
 
@@ -58,24 +59,5 @@ DockWindow::DockWindow()
     set_name("dockpp");
     gtk_layer_set_namespace(GTK_WINDOW(gobj()), "dockpp");
 
-    std::string css = Glib::getenv("HOME");
-    css += "/.config/eelie/main.css";
-
-    LoadCss(css);
     set_child(hide_box);
-}
-
-void DockWindow::LoadCss(const std::string &css_path)
-{
-    auto css_provider = Gtk::CssProvider::create();
-    try
-    {
-        css_provider->load_from_path(css_path);
-        Gtk::StyleContext::add_provider_for_display(
-            Gdk::Display::get_default(), css_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    }
-    catch (const Gtk::CssParserError &ex)
-    {
-        std::cerr << "Error loading CSS file: " << ex.what() << std::endl;
-    }
 }

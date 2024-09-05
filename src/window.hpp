@@ -11,7 +11,6 @@ public:
 
 private:
     Gtk::Box master_box;
-    void LoadCss(const std::string &css_path);
 };
 
 #endif // WINDOW_HPP
