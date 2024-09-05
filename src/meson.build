@@ -1,11 +1,13 @@
+extra_dirs = include_directories('Modules')
+
 executable(
     project_name,
     sources: [
         'main.cpp',
-        'window.cpp',
-        'window.hpp',
-        'AppButton.cpp',
-        'AppButton.hpp',
+        'Modules/window.cpp',
+        'Modules/window.hpp',
+        'Modules/AppButton.cpp',
+        'Modules/AppButton.hpp',
     ],
     dependencies: [
         dependency('gtk4'),
@@ -13,5 +15,6 @@ executable(
         dependency('sigc++-3.0'),
         dependency('gtk4-layer-shell-0'),
     ],
+    include_directories: extra_dirs,
     install: true,
 )
