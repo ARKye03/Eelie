@@ -11,7 +11,7 @@ DockWindow::DockWindow()
     gtk_layer_set_layer(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_LAYER_TOP);
 
     gtk_layer_set_margin(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_EDGE_TOP, 10);
-    // gtk_layer_set_margin(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_EDGE_BOTTOM, 10);`
+    // gtk_layer_set_margin(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_EDGE_BOTTOM, 10);
 
     gtk_layer_set_anchor(GTK_WINDOW(gobj()), GTK_LAYER_SHELL_EDGE_BOTTOM, true);
 
@@ -22,7 +22,9 @@ DockWindow::DockWindow()
 
     auto show_controller = Gtk::EventControllerMotion::create();
     show_controller->signal_enter().connect([this](double x, double y)
-                                            { master_box.set_visible(true); });
+                                            {
+                                                master_box.set_visible(true);
+                                                gtk_layer_set_exclusive_zone(GTK_WINDOW(gobj()), -1); });
 
     Gtk::Box hide_box(Gtk::Orientation::VERTICAL);
     hide_box.set_css_classes({"event_box"});
@@ -30,7 +32,9 @@ DockWindow::DockWindow()
 
     auto hide_controller = Gtk::EventControllerMotion::create();
     hide_controller->signal_leave().connect([this]()
-                                            { master_box.set_visible(false); });
+                                            {
+                                                master_box.set_visible(false);
+                                                gtk_layer_set_exclusive_zone(GTK_WINDOW(gobj()), 0); });
 
     auto show_box = Gtk::Box();
     show_box.set_css_classes({"mbox"});
