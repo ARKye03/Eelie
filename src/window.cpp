@@ -20,24 +20,24 @@ DockWindow::DockWindow()
     master_box.set_css_classes({"master_box"});
     master_box.set_visible(false);
 
-    auto hover_controller = Gtk::EventControllerMotion::create();
-    hover_controller->signal_enter().connect([this](double x, double y)
-                                             { master_box.set_visible(true); });
+    auto show_controller = Gtk::EventControllerMotion::create();
+    show_controller->signal_enter().connect([this](double x, double y)
+                                            { master_box.set_visible(true); });
 
-    Gtk::Box event_box(Gtk::Orientation::VERTICAL);
-    event_box.set_css_classes({"event_box"});
-    event_box.append(master_box);
+    Gtk::Box hide_box(Gtk::Orientation::VERTICAL);
+    hide_box.set_css_classes({"event_box"});
+    hide_box.append(master_box);
 
-    auto hover_controller2 = Gtk::EventControllerMotion::create();
-    hover_controller2->signal_leave().connect([this]()
-                                              { master_box.set_visible(false); });
+    auto hide_controller = Gtk::EventControllerMotion::create();
+    hide_controller->signal_leave().connect([this]()
+                                            { master_box.set_visible(false); });
 
-    auto mbox = Gtk::Box();
-    mbox.set_css_classes({"mbox"});
-    event_box.append(mbox);
-    event_box.set_valign(Gtk::Align::END);
-    mbox.add_controller(hover_controller);
-    event_box.add_controller(hover_controller2);
+    auto show_box = Gtk::Box();
+    show_box.set_css_classes({"mbox"});
+    hide_box.append(show_box);
+    hide_box.set_valign(Gtk::Align::END);
+    show_box.add_controller(show_controller);
+    hide_box.add_controller(hide_controller);
 
     std::unordered_map<std::string, int> dictionary;
     dictionary["thunar.desktop"] = 0;
@@ -50,7 +50,6 @@ DockWindow::DockWindow()
         auto app_button = Gtk::make_managed<AppButton>(key);
         master_box.append(*app_button);
     }
-
     set_title("Dock");
     set_name("dockpp");
     gtk_layer_set_namespace(GTK_WINDOW(gobj()), "dockpp");
@@ -59,7 +58,7 @@ DockWindow::DockWindow()
     css += "/.config/eelie/main.css";
 
     LoadCss(css);
-    set_child(event_box);
+    set_child(hide_box);
 }
 
 void DockWindow::LoadCss(const std::string &css_path)
