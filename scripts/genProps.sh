@@ -9,8 +9,8 @@ CppProps() {
             "includePath": $includePaths,
             "defines": [],
             "compilerPath": "${clang}",
-            "cStandard": "c23",
-            "cppStandard": "c++23",
+            "cStandard": "gnu23",
+            "cppStandard": "gnu++23",
             "intelliSenseMode": "linux-clang-x64"
         }
     ],
