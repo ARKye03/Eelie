@@ -7,7 +7,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        dock-name = "org.codeberg.ARKye03.Eelie";
+        dock-name = "com.github.ARKye03.Eelie";
         version = builtins.replaceStrings [ "\n" ] [ "" ] (builtins.readFile ./version);
 
         gtk-utils = with pkgs; [

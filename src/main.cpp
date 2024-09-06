@@ -20,7 +20,7 @@ void LoadCss(const std::string &css_path)
 
 int main(int argc, char **argv)
 {
-    auto app = Gtk::Application::create("org.codeberg.ARKye03.Eelie");
+    auto app = Gtk::Application::create("com.github.ARKye03.Eelie");
 
     std::string css = Glib::getenv("HOME");
     css += "/.config/eelie/main.css";

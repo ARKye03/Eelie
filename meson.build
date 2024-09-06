@@ -1,5 +1,5 @@
 project(
-    'org.codeberg.ARKye03.Eelie',
+    'com.github.ARKye03.Eelie',
     ['cpp', 'c'],
     version: '0.1',
     meson_version: '>= 1.5.0',
