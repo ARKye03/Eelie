@@ -21,70 +21,30 @@
           nixd
         ];
         compile-utils = with pkgs; [
-          clang-tools
-          clang
           meson
           ninja
         ];
-        shell = pkgs.mkShell {
-          nativeBuildInputs = with pkgs.buildPackages; [
-            muon
-            gnumake
-            cmake
-          ] ++ nix-utils ++ compile-utils;
-          buildInputs = with pkgs; [
-            pkg-config
-          ] ++ gtk-utils;
+
+        stdenv = pkgs.gcc14Stdenv;
+
+        shell = import ./nix/shell.nix {
+          inherit pkgs nix-utils compile-utils gtk-utils stdenv;
         };
 
-        dock = pkgs.stdenv.mkDerivation {
-          name = dock-name;
-          version = version;
-          buildInputs = with pkgs; [ pkg-config ] ++ compile-utils ++ gtk-utils;
-          src = ./.;
-
-          buildPhase = ''
-            export CC=clang
-            export CXX=clang++
-            mkdir -p $TMPDIR/buildNix
-            cd $TMPDIR/buildNix
-            meson setup $TMPDIR/buildNix $src
-            ninja -C $TMPDIR/buildNix
-          '';
-
-          installPhase = ''
-            mkdir -p $out/bin
-            cp $TMPDIR/buildNix/src/${dock-name} $out/bin
-            chmod +x $out/bin/${dock-name}
-          '';
-
-          meta = with pkgs.lib; {
-            description = "Eelie Dock Application";
-            license = licenses.mit;
-            maintainers = with maintainers; [ ARKye03 ];
-          };
-        };
-        nonNixos-dock = dock.overrideAttrs {
-          installPhase = ''
-            mkdir -p $out/bin
-            cp $TMPDIR/buildNix/src/${dock-name} $out/bin
-            ${pkgs.patchelf}/bin/patchelf --set-interpreter /lib64/ld-linux-x86-64.so.2 $out/bin/${dock-name}
-            ${pkgs.patchelf}/bin/patchelf --set-rpath /lib:/usr/lib $out/bin/${dock-name}
-            ${pkgs.patchelf}/bin/patchelf --shrink-rpath $out/bin/${dock-name}
-            chmod +x $out/bin/${dock-name}
-          '';
+        dockDefinitions = import ./nix/default.nix {
+          inherit pkgs dock-name version gtk-utils compile-utils stdenv;
         };
 
       in
       {
         devShells.default = shell;
         packages = {
-          nixos = dock;
-          non_nixos = nonNixos-dock;
+          nixos = dockDefinitions.dock;
+          non_nixos = dockDefinitions.nonNixosDock;
         };
         apps.default = {
           type = "app";
-          program = "${dock}/bin/${dock-name}";
+          program = "${dockDefinitions.dock}/bin/${dock-name}";
         };
       });
 }
