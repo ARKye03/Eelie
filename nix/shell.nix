@@ -12,5 +12,6 @@ pkgs.mkShell.override
   ] ++ nix-utils ++ compile-utils;
   buildInputs = with pkgs; [
     pkg-config
+    git-cliff
   ] ++ gtk-utils;
 }
