@@ -27,8 +27,6 @@ All notable changes to this project will be documented in this file.
 - Update .vscode settings for C++ file associations
 - Update GTK layer shell margins and add CSS styling for master box
 - Update default app configuration in flake.nix
-- Update main.cpp, meson.build, and main.css
-- Update flake.nix to use version from file
 - Update flake.nix to use version from file
 - Remove commented out code and update flake.nix to use version from file
 - Update flake.nix to allow use on non-nixos distros
